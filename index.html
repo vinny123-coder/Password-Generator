@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Random Password Generator</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    input, button { padding: 5px 10px; margin: 5px; }
+    .password { margin: 3px 0; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Random Password Generator</h1>
+
+  <label for="count">Number of passwords:</label>
+  <input type="number" id="count" min="1" value="5">
+
+  <button onclick="generatePasswords()">Generate</button>
+  <button onclick="copyPasswords()">Copy All</button>
+  <button onclick="clearPasswords()">Clear</button>
+
+  <div id="results"></div>
+
+  <script>
+    function generatePassword() {
+      const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const lower = "abcdefghijklmnopqrstuvwxyz";
+      const numbers = "0123456789";
+      const special = "@!*";
+
+      // ensure at least one of each requirement
+      let password = "";
+      password += upper[Math.floor(Math.random() * upper.length)];
+      password += lower[Math.floor(Math.random() * lower.length)];
+      password += numbers[Math.floor(Math.random() * numbers.length)];
+      password += special[Math.floor(Math.random() * special.length)];
+
+      const allChars = upper + lower + numbers + special;
+
+      // fill remaining characters to reach 8
+      for (let i = password.length; i < 8; i++) {
+        password += allChars[Math.floor(Math.random() * allChars.length)];
+      }
+
+      // shuffle characters
+      password = password.split("").sort(() => Math.random() - 0.5).join("");
+      return password;
+    }
+
+    function generatePasswords() {
+      const count = parseInt(document.getElementById("count").value);
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = ""; // clear previous results
+
+      for (let i = 0; i < count; i++) {
+        const pass = generatePassword();
+        const div = document.createElement("div");
+        div.className = "password";
+        div.textContent = pass;
+        resultsDiv.appendChild(div);
+      }
+    }
+
+    function copyPasswords() {
+      const resultsDiv = document.getElementById("results");
+      const passwords = Array.from(resultsDiv.querySelectorAll(".password"))
+                             .map(div => div.textContent)
+                             .join("\n");
+
+      navigator.clipboard.writeText(passwords).then(() => {
+        alert("Passwords copied! You can now paste them into Excel.");
+      }).catch(err => {
+        alert("Failed to copy passwords: " + err);
+      });
+    }
+
+    function clearPasswords() {
+      document.getElementById("results").innerHTML = "";
+    }
+  </script>
+</body>
+</html>
