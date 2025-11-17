@@ -14,10 +14,15 @@
 
   <label for="count">Number of passwords:</label>
   <input type="number" id="count" min="1" value="5">
+<<<<<<< HEAD
 
   <button onclick="generatePasswords()">Generate</button>
   <button onclick="copyPasswords()">Copy All</button>
   <button onclick="clearPasswords()">Clear</button>
+=======
+  <button onclick="generatePasswords()">Generate</button>
+  <button onclick="copyPasswords()">Copy All</button>
+>>>>>>> a82cbaa81c7d4fd9331ea326218c4d0f509ef94c
 
   <div id="results"></div>
 
@@ -37,7 +42,11 @@
 
       const allChars = upper + lower + numbers + special;
 
+<<<<<<< HEAD
       // fill remaining characters to reach 8
+=======
+      // fill remaining characters to make 8
+>>>>>>> a82cbaa81c7d4fd9331ea326218c4d0f509ef94c
       for (let i = password.length; i < 8; i++) {
         password += allChars[Math.floor(Math.random() * allChars.length)];
       }
@@ -54,10 +63,17 @@
 
       for (let i = 0; i < count; i++) {
         const pass = generatePassword();
+<<<<<<< HEAD
         const div = document.createElement("div");
         div.className = "password";
         div.textContent = pass;
         resultsDiv.appendChild(div);
+=======
+        const p = document.createElement("div");
+        p.className = "password";
+        p.textContent = pass;
+        resultsDiv.appendChild(p);
+>>>>>>> a82cbaa81c7d4fd9331ea326218c4d0f509ef94c
       }
     }
 
@@ -65,7 +81,11 @@
       const resultsDiv = document.getElementById("results");
       const passwords = Array.from(resultsDiv.querySelectorAll(".password"))
                              .map(div => div.textContent)
+<<<<<<< HEAD
                              .join("\n");
+=======
+                             .join("\n"); // each password on a new line
+>>>>>>> a82cbaa81c7d4fd9331ea326218c4d0f509ef94c
 
       navigator.clipboard.writeText(passwords).then(() => {
         alert("Passwords copied! You can now paste them into Excel.");
@@ -73,10 +93,13 @@
         alert("Failed to copy passwords: " + err);
       });
     }
+<<<<<<< HEAD
 
     function clearPasswords() {
       document.getElementById("results").innerHTML = "";
     }
+=======
+>>>>>>> a82cbaa81c7d4fd9331ea326218c4d0f509ef94c
   </script>
 </body>
 </html>
