@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Random Password Generator</title>
+  <title>Secure Password Generator</title>
   <style>
     body { font-family: Arial, sans-serif; padding: 20px; }
     input, button { padding: 5px 10px; margin: 5px; }
@@ -10,19 +10,13 @@
   </style>
 </head>
 <body>
-  <h1>Random Password Generator</h1>
+  <h1>Secure Password Generator</h1>
 
   <label for="count">Number of passwords:</label>
   <input type="number" id="count" min="1" value="5">
-<<<<<<< HEAD
 
   <button onclick="generatePasswords()">Generate</button>
   <button onclick="copyPasswords()">Copy All</button>
-  <button onclick="clearPasswords()">Clear</button>
-=======
-  <button onclick="generatePasswords()">Generate</button>
-  <button onclick="copyPasswords()">Copy All</button>
->>>>>>> a82cbaa81c7d4fd9331ea326218c4d0f509ef94c
 
   <div id="results"></div>
 
@@ -31,9 +25,9 @@
       const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
       const lower = "abcdefghijklmnopqrstuvwxyz";
       const numbers = "0123456789";
-      const special = "@!*";
+      const special = "@$!*?";
 
-      // ensure at least one of each requirement
+      // Start with one of each required type
       let password = "";
       password += upper[Math.floor(Math.random() * upper.length)];
       password += lower[Math.floor(Math.random() * lower.length)];
@@ -42,38 +36,28 @@
 
       const allChars = upper + lower + numbers + special;
 
-<<<<<<< HEAD
-      // fill remaining characters to reach 8
-=======
-      // fill remaining characters to make 8
->>>>>>> a82cbaa81c7d4fd9331ea326218c4d0f509ef94c
-      for (let i = password.length; i < 8; i++) {
+      // Fill remaining characters to reach 8
+      while (password.length < 8) {
         password += allChars[Math.floor(Math.random() * allChars.length)];
       }
 
-      // shuffle characters
+      // Shuffle to randomize positions
       password = password.split("").sort(() => Math.random() - 0.5).join("");
+
       return password;
     }
 
     function generatePasswords() {
       const count = parseInt(document.getElementById("count").value);
       const resultsDiv = document.getElementById("results");
-      resultsDiv.innerHTML = ""; // clear previous results
+      resultsDiv.innerHTML = "";
 
       for (let i = 0; i < count; i++) {
         const pass = generatePassword();
-<<<<<<< HEAD
         const div = document.createElement("div");
         div.className = "password";
         div.textContent = pass;
         resultsDiv.appendChild(div);
-=======
-        const p = document.createElement("div");
-        p.className = "password";
-        p.textContent = pass;
-        resultsDiv.appendChild(p);
->>>>>>> a82cbaa81c7d4fd9331ea326218c4d0f509ef94c
       }
     }
 
@@ -81,25 +65,16 @@
       const resultsDiv = document.getElementById("results");
       const passwords = Array.from(resultsDiv.querySelectorAll(".password"))
                              .map(div => div.textContent)
-<<<<<<< HEAD
                              .join("\n");
-=======
-                             .join("\n"); // each password on a new line
->>>>>>> a82cbaa81c7d4fd9331ea326218c4d0f509ef94c
 
-      navigator.clipboard.writeText(passwords).then(() => {
-        alert("Passwords copied! You can now paste them into Excel.");
-      }).catch(err => {
-        alert("Failed to copy passwords: " + err);
-      });
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(passwords)
+          .then(() => alert("Passwords copied!"))
+          .catch(err => alert("Failed to copy: " + err));
+      } else {
+        prompt("Copy the passwords below:", passwords);
+      }
     }
-<<<<<<< HEAD
-
-    function clearPasswords() {
-      document.getElementById("results").innerHTML = "";
-    }
-=======
->>>>>>> a82cbaa81c7d4fd9331ea326218c4d0f509ef94c
   </script>
 </body>
 </html>
